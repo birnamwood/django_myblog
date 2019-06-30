@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>ブログ</title>
+  </head>
+
+  <body>
+    {% for post in posts %}
+    <div>
+      <p>date: {{ post.created_date }}</p>
+      <h1><a href="">title: {{ post.title }}</a></h1>
+      <p>{{ post.text|linebreaksbr }}</p>
+      <!-- |kinebreaksbr = 改行の表示 -->
+      <hr>
+    </div>
+    {% endfor %}
+  </body>
+</html>
