@@ -8,7 +8,7 @@
     {% for post in posts %}
     <div>
       <p>date: {{ post.created_date }}</p>
-      <h1><a href="">title: {{ post.title }}</a></h1>
+      <h1><a href="{% url 'blog:article' post.id %}">title: {{ post.title }}</a></h1>
       <p>{{ post.text|linebreaksbr }}</p>
       <!-- |kinebreaksbr = 改行の表示 -->
       <hr>
