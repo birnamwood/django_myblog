@@ -5,4 +5,5 @@ app_name = 'blog'   #namespace定義
 urlpatterns = [
   path('', views.post_list, name='post_list'),
   path('article/<int:pk>/', views.article, name='article'),
+  path('article/<int:pk>/comment-delete/<int:comment_pk>/', views.delete_comment, name='delete_comment'),
 ]

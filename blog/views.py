@@ -1,7 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.utils import timezone
 from .models import Post, Comment
-from .import forms
+from . import forms
 
 
 def post_list(request):
@@ -14,7 +14,7 @@ def article(request, pk):
   comments = Comment.objects.filter(post=article)
 
   if request.method == "POST":
-    form = forms.commentForm(request.POST)
+    form = forms.CommentForm(request.POST)
     if form.is_valid():
       comment = form.save(commit=False)
       comment.post = article
@@ -29,3 +29,11 @@ def article(request, pk):
      'form': form,
      'comments': comments
      })
+
+def delete_comment(request, pk, comment_pk):
+  comment = Comment.objects.get(id=comment_pk)
+  post_id = pk
+  if request.user.id == comment.author.id or \
+     request.user.id == comment.post.author.id:
+     comment.delete()
+  return redirect('blog:article', pk=post_id)

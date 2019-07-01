@@ -18,7 +18,7 @@
       <h3>コメント</h3>
       <form method="post" action="">
         {% csrf_token %}
-        {{ form.as_p}}
+        {{ form.as_p }}
         <input type="submit">
       </form>
       <hr>
@@ -26,7 +26,10 @@
         author: {{ comment.author }}<br>
         name: {{ comment.name }}<br>
         {{ comment.text}}<br>
-        <hr>
+        {% if request.user.id == article.author.id or request.user.id == comment.author.id %}
+          <a href="{% url 'blog:delete_comment' article.id comment.id %}" class="btn btn-danger">コメント削除</a>
+        {% endif %}
+          <hr>
       {% endfor %}
     </div>
   </body>
