@@ -77,3 +77,10 @@ def edit_article(request, pk):
   })
 
 
+def delete_article(request, pk):
+  article = Post.objects.get(id=pk)
+
+  if request.user.id == article.author.id:
+    article.delete()
+  return redirect('blog:post_list')
+
