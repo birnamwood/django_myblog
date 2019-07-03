@@ -30,6 +30,7 @@ def article(request, pk):
      'comments': comments
      })
 
+
 def delete_comment(request, pk, comment_pk):
   comment = Comment.objects.get(id=comment_pk)
   post_id = pk
@@ -37,3 +38,42 @@ def delete_comment(request, pk, comment_pk):
      request.user.id == comment.post.author.id:
      comment.delete()
   return redirect('blog:article', pk=post_id)
+
+
+def create_article(request):
+  form = forms.PostForm()
+  if request.method == "POST":
+    form = forms.PostForm(request.POST)
+    if form.is_valid():
+      post = form.save(commit=False)
+      post.author = request.user
+      post.save()
+    return redirect('blog:article', pk=post.id)
+
+  return render(request, 'blog/create_article.html',{
+      'form': form
+  })
+
+
+def edit_article(request, pk):
+  article = Post.objects.get(id=pk)
+
+  if request.user.id == article.author.id:
+    if request.method == "POST":
+      form = forms.PostForm(request.POST, instance=article)
+      if form.is_valid():
+        article = form.save(commit=False)
+        article.author = request.user
+        article.save()
+      return redirect('blog:article', pk=article.id)
+    else:
+      form = forms.PostForm(instance=article)
+      print(form)
+  else:
+    return redirect('blog:article', pk=article.id)
+
+  return render(request, 'blog/edit_article.html', {
+        'article':article, 'form':form
+  })
+
+
