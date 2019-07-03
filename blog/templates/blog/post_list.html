@@ -1,11 +1,24 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <!-- bootstrap -->
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+
     <title>ブログ</title>
   </head>
 
   <body>
-    <a href="{% url 'blog:create_article' %}">記事の作成</a>
+    <a href="{% url 'blog:post_list' %}" class="btn btn-primary">HOME</a>
+    <hr>
+    <a href="{% url 'blog:create_article' %}" class="btn btn-primary">記事の作成</a>
+    <hr>
+    <form method="get" action="">
+      {{form}}
+      <input type="submit" value="検索">
+    </form>
+    <hr>
+
     {% for post in posts %}
     <div>
       <p>date: {{ post.created_date }}</p>

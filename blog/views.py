@@ -6,7 +6,16 @@ from . import forms
 
 def post_list(request):
     posts = Post.objects.all()
-    return render(request, 'blog/post_list.html', {'posts' : posts})
+    form = forms.SearchForm()
+    print(request.GET)
+
+    if request.GET.get('q'):
+      posts = posts.filter(title__contains = request.GET.get('q'))
+
+    return render(request, 'blog/post_list.html', {
+      'posts' : posts,
+      'form' : form
+      })
 
 
 def article(request, pk):

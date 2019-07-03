@@ -13,3 +13,8 @@ class PostForm(forms.ModelForm):
     model = models.Post
     fields = ('title', 'text',)
     #exclude = ('title',)と書いて除外指定のみ行うこともできる
+
+
+class SearchForm(forms.Form):
+  q = forms.CharField(label="検索")
+
